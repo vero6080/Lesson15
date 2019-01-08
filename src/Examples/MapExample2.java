@@ -16,42 +16,60 @@ public class MapExample2 {
         bp.put("Fire", new Pokemon("Charmander", 7));
         bp.put("Electric", new Pokemon("Raichu", 26)); //replaces Pikachu
         System.out.println(bp);
-        */
-        
-        HashMap <String,HashSet<Pokemon>> ap = new HashMap <String,HashSet<Pokemon>>();
-        
-        ap.put("Electric", new HashSet());
-        ap.put("Water", new HashSet());
-        ap.put("Grass", new HashSet());
-        
+         */
+
+        HashMap<String, HashSet<Pokemon>> ap = new HashMap<String, HashSet<Pokemon>>();
+
+        ap.put("Electric", new HashSet<Pokemon>());
+        ap.put("Water", new HashSet<Pokemon>());
+        ap.put("Grass", new HashSet<Pokemon>());
+
         ap.get("Electric").add(new Pokemon("Pikachu", 25));
         ap.get("Electric").add(new Pokemon("Raichu", 26));
         ap.get("Electric").add(new Pokemon("Voltorb", 100));
-        
+
         ap.get("Water").add(new Pokemon("Squirtle", 7));
         ap.get("Water").add(new Pokemon("Blastoise", 9));
-        
+
         ap.get("Grass").add(new Pokemon("Bulbasaur", 1));
         ap.get("Grass").add(new Pokemon("Ivysaur", 2));
         ap.get("Grass").add(new Pokemon("Venasaur", 3));
         ap.get("Grass").add(new Pokemon("Vileplume", 45));
-        
+
         System.out.println("Here are the types (keys)");
         Set types = ap.keySet();
         Iterator it = types.iterator();
         while (it.hasNext()) {
             System.out.print(it.next() + ", ");
-            
+
         }
+        System.out.println("\n----------------------");
         
-        System.out.println("Here are the grass Pokemon");
+        System.out.println("Venasaur got away");
+        ap.get("Grass").remove(new Pokemon("Venasaur", 3));
+        System.out.println("---------------------");
+
+        System.out.println("Here are the grass Pokemon:");
         Set grass = ap.get("Grass");
         it = grass.iterator();
         while (it.hasNext()) {
             System.out.print(it.next() + ", ");
-            
         }
-        
+        System.out.println("\n=====================================");
+
+        for (Map.Entry<String, HashSet<Pokemon>> entry : ap.entrySet()) {
+            String key = entry.getKey();
+            HashSet<Pokemon> value = entry.getValue();
+            it = value.iterator();
+            
+            System.out.println("Here is a list of " + key + " Pokemon:");
+            while (it.hasNext()) {
+                System.out.println(it.next());
+                
+            }
+            System.out.println("----------------------");
+        }
+
     }
-    
+
 }
