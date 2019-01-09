@@ -1,5 +1,7 @@
 package Conference;
 
+import java.util.Objects;
+
 public class Guest {
     
     String email;
@@ -22,4 +24,29 @@ public class Guest {
     public String toString(){
         return name + "<" + email + ">";
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + Objects.hashCode(this.email);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Guest other = (Guest) obj;
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        return true;
+    }  
 }

@@ -1,6 +1,9 @@
 package Conference;
 
 public class GuestForm extends javax.swing.JDialog {
+    
+    Guest g;
+    String signal;
 
     public GuestForm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -25,8 +28,18 @@ public class GuestForm extends javax.swing.JDialog {
         jLabel2.setText("Email:");
 
         btnok.setText("Ok");
+        btnok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnokActionPerformed(evt);
+            }
+        });
 
         btncancel.setText("Cancel");
+        btncancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncancelActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -71,6 +84,25 @@ public class GuestForm extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnokActionPerformed
+        g = new Guest(txtemail.getText(),txtname.getText());
+        signal = "ok";
+        this.dispose();
+    }//GEN-LAST:event_btnokActionPerformed
+
+    private void btncancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncancelActionPerformed
+        signal = "cancel";
+        this.dispose();
+    }//GEN-LAST:event_btncancelActionPerformed
+
+    public Guest getGuest(){
+        return g;
+    }
+    
+    public String getSignal(){
+        return signal;
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

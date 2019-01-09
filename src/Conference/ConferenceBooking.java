@@ -1,9 +1,48 @@
 package Conference;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Iterator;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+
 public class ConferenceBooking extends javax.swing.JFrame {
+    
+    public Conference a, b, c, d;
+    public HashMap <String,Conference> schedule;
+    DefaultListModel list;
+    Conference conf;
 
     public ConferenceBooking() {
         initComponents();
+        try{
+            FileReader f = new FileReader("Conference.txt");
+            BufferedReader b = new BufferedReader(f);
+            /*
+            for (int i = 0; i < 12; i++) {
+                String conf = b.readLine();
+                String gst = b.readLine();
+                System.out.println(conf + " is being attended by " + gst);
+            }
+            b.close();
+            */
+        }catch(Exception e){
+            System.out.println("File not found");
+        }
+        
+        a = new Conference("Android Studio Essentials","Learn Android Studio, the latest technology in Android App Development","android.PNG");
+        b = new Conference("Techniques in Game Development","Industry leaders gather for a roundtable of the latest gaming trends","game.PNG");
+        c = new Conference("Introducing HTML","A beginning course on web development with HTML","html.PNG");
+        d = new Conference("Java Advanced Concepts","Take your Java skills to the next level with Object Oriented fundamentals","java.PNG");
+        schedule = new HashMap<String,Conference>();
+        schedule.put("Android",a);
+        schedule.put("Gaming",b);
+        schedule.put("HTML",c);
+        schedule.put("Java",d);
+        list = new DefaultListModel();
+        lstguest.setModel(list);
+        update("Android");
     }
 
     @SuppressWarnings("unchecked")
@@ -21,7 +60,7 @@ public class ConferenceBooking extends javax.swing.JFrame {
         lbldescription = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstguest = new javax.swing.JList<>();
-        jButton1 = new javax.swing.JButton();
+        btnexit = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         btnenroll = new javax.swing.JButton();
         btnremove = new javax.swing.JButton();
@@ -51,12 +90,32 @@ public class ConferenceBooking extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btnandroid.setText("Android");
+        btnandroid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnandroidActionPerformed(evt);
+            }
+        });
 
         btnhtml.setText("HTML");
+        btnhtml.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnhtmlActionPerformed(evt);
+            }
+        });
 
         btnjava.setText("Java");
+        btnjava.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnjavaActionPerformed(evt);
+            }
+        });
 
         btngaming.setText("Gaming");
+        btngaming.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btngamingActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -91,7 +150,12 @@ public class ConferenceBooking extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(lstguest);
 
-        jButton1.setText("Save and Exit");
+        btnexit.setText("Save and Exit");
+        btnexit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnexitActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -101,7 +165,7 @@ public class ConferenceBooking extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lbldescription, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnexit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
@@ -115,15 +179,25 @@ public class ConferenceBooking extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(lbldescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                        .addComponent(btnexit)))
                 .addContainerGap())
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btnenroll.setText("Enroll Guest");
+        btnenroll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnenrollActionPerformed(evt);
+            }
+        });
 
         btnremove.setText("Remove Guest");
+        btnremove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnremoveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -194,6 +268,63 @@ public class ConferenceBooking extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnenrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnenrollActionPerformed
+        GuestForm form = new GuestForm(this, true);
+        form.setVisible(true);
+        if(form.getSignal().equals("ok")){
+            Guest g = form.getGuest();
+            if(conf.signup(g))
+                list.addElement(g);
+            else
+                JOptionPane.showMessageDialog(this, "Guest is already enrolled");
+        }
+    }//GEN-LAST:event_btnenrollActionPerformed
+
+    private void btnremoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnremoveActionPerformed
+        int loc = lstguest.getSelectedIndex();
+        if (loc==-1){
+            JOptionPane.showMessageDialog(this, "You need to select a person to remove");
+            return;
+        }
+        String info = list.getElementAt(loc).toString();
+        Guest g = new Guest(info);
+        conf.remove(g);
+        list.removeElementAt(loc);
+    }//GEN-LAST:event_btnremoveActionPerformed
+
+    private void btnandroidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnandroidActionPerformed
+        update("Android");
+    }//GEN-LAST:event_btnandroidActionPerformed
+
+    private void btnhtmlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnhtmlActionPerformed
+        update("HTML");
+    }//GEN-LAST:event_btnhtmlActionPerformed
+
+    private void btnjavaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnjavaActionPerformed
+        update("Java");
+    }//GEN-LAST:event_btnjavaActionPerformed
+
+    private void btngamingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngamingActionPerformed
+        update("Gaming");
+    }//GEN-LAST:event_btngamingActionPerformed
+
+    private void btnexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexitActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnexitActionPerformed
+
+    public void update(String key){
+        list.clear();
+        conf = schedule.get(key);
+        /*
+        Iterator it = conf.getList().iterator();
+        while(it.hasNext())
+            list.addElement(it.next());
+        */
+        lblname.setText(conf.getName());
+        lbldescription.setText("<html>" + conf.getDescription() + "</html>");
+        lblimage.setIcon(conf.getImage());
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -229,11 +360,11 @@ public class ConferenceBooking extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnandroid;
     private javax.swing.JButton btnenroll;
+    private javax.swing.JButton btnexit;
     private javax.swing.JButton btngaming;
     private javax.swing.JButton btnhtml;
     private javax.swing.JButton btnjava;
     private javax.swing.JButton btnremove;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

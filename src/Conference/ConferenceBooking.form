@@ -149,21 +149,33 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Android"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnandroidActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnhtml">
           <Properties>
             <Property name="text" type="java.lang.String" value="HTML"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnhtmlActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnjava">
           <Properties>
             <Property name="text" type="java.lang.String" value="Java"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnjavaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btngaming">
           <Properties>
             <Property name="text" type="java.lang.String" value="Gaming"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btngamingActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -183,7 +195,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="lbldescription" pref="150" max="32767" attributes="0"/>
-                      <Component id="jButton1" max="32767" attributes="0"/>
+                      <Component id="btnexit" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
@@ -200,7 +212,7 @@
                       <Group type="102" attributes="0">
                           <Component id="lbldescription" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnexit" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -233,10 +245,13 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btnexit">
           <Properties>
             <Property name="text" type="java.lang.String" value="Save and Exit"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnexitActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -279,11 +294,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Enroll Guest"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnenrollActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnremove">
           <Properties>
             <Property name="text" type="java.lang.String" value="Remove Guest"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnremoveActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

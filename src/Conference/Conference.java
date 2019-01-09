@@ -16,12 +16,20 @@ public class Conference {
         people = new HashSet();
     }
     
+    //need to see if this works
     public boolean signup(Guest g){
-        return true; //temporary
+        if(people.add(g))
+            return true;
+        else
+            return false;
     }
     
+    //need to see if this works
     public boolean remove(Guest g){
-        return true;//temporary
+        if(people.remove(g))
+            return true;
+        else
+            return false;
     }
     
     public String getName() {
