@@ -1,6 +1,8 @@
 package Conference;
 
+import java.io.PrintWriter;
 import java.util.HashSet;
+import java.util.Iterator;
 import javax.swing.ImageIcon;
 
 public class Conference {
@@ -16,7 +18,6 @@ public class Conference {
         people = new HashSet();
     }
     
-    //need to see if this works
     public boolean signup(Guest g){
         if(people.add(g))
             return true;
@@ -24,7 +25,6 @@ public class Conference {
             return false;
     }
     
-    //need to see if this works
     public boolean remove(Guest g){
         if(people.remove(g))
             return true;
@@ -46,5 +46,13 @@ public class Conference {
 
     public ImageIcon getImage() {
         return image;
+    }
+    
+    public void save(PrintWriter pw, String key){
+        Iterator it = people.iterator();
+        while(it.hasNext()){
+            pw.println(key);
+            pw.println(it.next());
+        }
     }
 }

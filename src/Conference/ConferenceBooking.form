@@ -195,7 +195,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="lbldescription" pref="150" max="32767" attributes="0"/>
-                      <Component id="btnexit" max="32767" attributes="0"/>
+                      <Component id="btnsave" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
@@ -212,7 +212,7 @@
                       <Group type="102" attributes="0">
                           <Component id="lbldescription" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnexit" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnsave" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -245,12 +245,12 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="btnexit">
+        <Component class="javax.swing.JButton" name="btnsave">
           <Properties>
             <Property name="text" type="java.lang.String" value="Save and Exit"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnexitActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnsaveActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

@@ -2,6 +2,8 @@ package Conference;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import javax.swing.DefaultListModel;
@@ -16,21 +18,6 @@ public class ConferenceBooking extends javax.swing.JFrame {
 
     public ConferenceBooking() {
         initComponents();
-        try{
-            FileReader f = new FileReader("Conference.txt");
-            BufferedReader b = new BufferedReader(f);
-            /*
-            for (int i = 0; i < 12; i++) {
-                String conf = b.readLine();
-                String gst = b.readLine();
-                System.out.println(conf + " is being attended by " + gst);
-            }
-            b.close();
-            */
-        }catch(Exception e){
-            System.out.println("File not found");
-        }
-        
         a = new Conference("Android Studio Essentials","Learn Android Studio, the latest technology in Android App Development","android.PNG");
         b = new Conference("Techniques in Game Development","Industry leaders gather for a roundtable of the latest gaming trends","game.PNG");
         c = new Conference("Introducing HTML","A beginning course on web development with HTML","html.PNG");
@@ -42,6 +29,7 @@ public class ConferenceBooking extends javax.swing.JFrame {
         schedule.put("Java",d);
         list = new DefaultListModel();
         lstguest.setModel(list);
+        openFile();
         update("Android");
     }
 
@@ -60,7 +48,7 @@ public class ConferenceBooking extends javax.swing.JFrame {
         lbldescription = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         lstguest = new javax.swing.JList<>();
-        btnexit = new javax.swing.JButton();
+        btnsave = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         btnenroll = new javax.swing.JButton();
         btnremove = new javax.swing.JButton();
@@ -150,10 +138,10 @@ public class ConferenceBooking extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(lstguest);
 
-        btnexit.setText("Save and Exit");
-        btnexit.addActionListener(new java.awt.event.ActionListener() {
+        btnsave.setText("Save and Exit");
+        btnsave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnexitActionPerformed(evt);
+                btnsaveActionPerformed(evt);
             }
         });
 
@@ -165,7 +153,7 @@ public class ConferenceBooking extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lbldescription, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
-                    .addComponent(btnexit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnsave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
@@ -179,7 +167,7 @@ public class ConferenceBooking extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(lbldescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnexit)))
+                        .addComponent(btnsave)))
                 .addContainerGap())
         );
 
@@ -308,21 +296,55 @@ public class ConferenceBooking extends javax.swing.JFrame {
         update("Gaming");
     }//GEN-LAST:event_btngamingActionPerformed
 
-    private void btnexitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnexitActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnexitActionPerformed
+    private void btnsaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsaveActionPerformed
+        FileWriter fw;
+        try{
+            fw = new FileWriter("Conference.txt");
+            PrintWriter p = new PrintWriter(fw);
+            Conference a = schedule.get("Android");
+            Conference b = schedule.get("Gaming");
+            Conference c = schedule.get("HTML");
+            Conference d = schedule.get("Java");
+            a.save(p, "Android");
+            b.save(p, "Gaming");
+            c.save(p, "HTML");
+            d.save(p, "Java");
+            p.close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+        JOptionPane.showMessageDialog(this, "Conference Data Saved");
+        System.exit(0);
+    }//GEN-LAST:event_btnsaveActionPerformed
 
     public void update(String key){
         list.clear();
         conf = schedule.get(key);
-        /*
-        Iterator it = conf.getList().iterator();
+        Iterator it = conf.getPeople().iterator();
         while(it.hasNext())
             list.addElement(it.next());
-        */
         lblname.setText(conf.getName());
         lbldescription.setText("<html>" + conf.getDescription() + "</html>");
         lblimage.setIcon(conf.getImage());
+    }
+    
+    public void openFile(){
+        try{
+            FileReader f = new FileReader("Conference.txt");
+            BufferedReader b = new BufferedReader(f);
+            String key, data;
+            Guest g;
+            while(true){
+                key = b.readLine();
+                if(key==null) break;
+                data = b.readLine();
+                g = new Guest(data);
+                schedule.get(key).signup(g);
+            }
+            b.close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
     }
     
     public static void main(String args[]) {
@@ -360,11 +382,11 @@ public class ConferenceBooking extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnandroid;
     private javax.swing.JButton btnenroll;
-    private javax.swing.JButton btnexit;
     private javax.swing.JButton btngaming;
     private javax.swing.JButton btnhtml;
     private javax.swing.JButton btnjava;
     private javax.swing.JButton btnremove;
+    private javax.swing.JButton btnsave;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
